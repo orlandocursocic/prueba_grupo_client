@@ -1,60 +1,49 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <!--<master-chooser></master-chooser>
+    <h2 v-show="opcion == 'entradas'"><strong>{{ title.Entradas }}</strong></h2>
+    <maestro-entrada v-show="opcion == 'entradas'"></maestro-entrada>
+    <detalle-entrada v-show="opcion == 'entradas'"></detalle-entrada>-->
+    <h2 v-show="opcion == 'tareas'"><strong>{{ title.Tareas }}</strong></h2>
+    <maestro-tarea v-show="opcion == 'tareas'"></maestro-tarea>
+    <!--<detalle-tarea v-show="opcion == 'tareas'"></detalle-pelicula>
+    <infomessage style="clear:both"></infomessage>-->
   </div>
 </template>
 
 <script>
+import EventBus from './components/event-bus.js'
+/*import Chooser from './components/Chooser.vue'
+import MaestroEntrada from './components/Maestro-Entrada.vue'
+import DetalleEntrada from './components/Detalle-Entrada.vue'*/
+import MaestroTarea from './components/Maestro-Tarea.vue'
+//import DetalleTarea from './components/Detalle-Tarea.vue'
+//import InfoMessage from './components/InfoMessage.vue'
+
 export default {
-  name: 'app',
-  data () {
+  components: {
+    /*'master-chooser' : Chooser,
+    'maestro-entrada' : MaestroEntrada,
+    'detalle-entrada' : DetalleEntrada,*/
+    'maestro-tarea' : MaestroTarea,
+    //'detalle-tarea' : DetalleTarea,
+    //'infomessage' : InfoMessage
+  },
+
+  data: function() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      title: {
+        //Entradas: 'Maestro-Detalle de Entrada',
+        Tareas: 'Maestro-Detalle de Tarea'
+      },
+      opcion: 'tareas'
     }
+  },
+
+  mounted: function(){
+    EventBus.$on('chooseOption', function(opcion) {
+      this.opcion = opcion;
+    }.bind(this));
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>
