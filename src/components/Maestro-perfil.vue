@@ -10,14 +10,14 @@
 <script>
 
 import EventBus from './event-bus.js'
-import AppIcon from './App-icon.vue'
+//import AppIcon from './App-icon.vue'
 import appConfig from './config.js'
 
 var httpURL = appConfig.URLPerfil;
 
 export default {
   components: {
-    'app-icon' : AppIcon
+    //'app-icon' : AppIcon
   },
   methods: {
   	loadList: function(){

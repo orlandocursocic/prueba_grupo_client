@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!--<button type="button" class="btn btn-default btn-sm" title="Entrada" @click="chooseOption(options.Entradas)">
-      <app-icon img="th-list"></app-icon> Entradas
-    </button>-->
+    <<button type="button" class="btn btn-default btn-sm" title="Perfil" @click="chooseOption(options.Perfiles)">
+      <!-- <app-icon img="th-list"></app-icon> Perfiles -->
+    </button>
     <button type="button" class="btn btn-default btn-sm" title="Tarea" @click="chooseOption(options.Tareas)">
-      <app-icon img="th-list"></app-icon> Tareas
+      <!-- <app-icon img="th-list"></app-icon> Tareas -->
     </button>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   data: function() {
     return {
       options: {
-       // Entradas: 'entradas',
+        Perfiles: 'perfiles',
         Tareas: 'tareas'
       }
     }
