@@ -70,17 +70,17 @@
 
 <script>
 import EventBus from './event-bus.js'
-import AppIcon from './App-icon.vue'
+//import AppIcon from './App-icon.vue'
 import appConfig from './config.js'
-import InfoMessage from './InfoMessage.vue'
+//import InfoMessage from './InfoMessage.vue'
 
 var httpURL = appConfig.URLTarea;
 var maxInt =  2147483647;
 
 export default {
   components: {
-    'app-icon' : AppIcon,
-    'infomessage' : InfoMessage
+    //'app-icon' : AppIcon,
+    //'infomessage' : InfoMessage
   },
 
   methods: {
