@@ -1,15 +1,18 @@
 <template>
   <div class="w3-container w3-card-4" style="min-width:300px; display:inline-block; vertical-align:top">
     <div>
-      <h3 style="overflow: hidden; text-overflow: ellipsis"><strong>Tarea: </strong>{{Tarea.Nombre}}</h3>
+      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Tarea: </strong>{{Tarea.Nombre}}</h3>
       <label class="w3-text" for="nombre"> Nombre </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Tarea.Nombre">
+      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Tarea.Nombre"></textarea> 
+      <br>
       <label class="w3-text" for="desc"> Descripcion </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="desc" value="Descripcion" :disabled="!editing && !addingNew" v-model="Tarea.Descripcion">
+      <textarea class="w3-input w3-border" rows="3" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="desc" value="Descripcion" :disabled="!editing && !addingNew" v-model="Tarea.Descripcion"></textarea>
+      <br>
       <label class="w3-text" for="fecha"> Fecha </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="fecha" value="Fecha" :disabled="!editing && !addingNew" v-model="Tarea.Fecha">
+      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="string" name="fecha" value="Fecha" :disabled="!editing && !addingNew" v-model="Tarea.Fecha">
+      <br>
       <label class="w3-text" for="complejidad"> Complejidad </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="complejidad" 
+      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="string" name="complejidad" 
       value="Complejidad" :disabled="!editing && !addingNew" v-model="Tarea.Complejidad">
     </div>
 
