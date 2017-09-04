@@ -1,7 +1,7 @@
 <template>
-  <div class="w3-container w3-card-4" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4" style="min-width:300px; display:inline-block; vertical-align:top">
     <div>
-      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Tarea: </strong>{{Tarea.Nombre}}</h3>
+      <h3 style="overflow: hidden; text-overflow: ellipsis"><strong>Tarea: </strong>{{Tarea.Nombre}}</h3>
       <label class="w3-text" for="nombre"> Nombre </label>
       <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Tarea.Nombre">
       <label class="w3-text" for="desc"> Descripcion </label>
