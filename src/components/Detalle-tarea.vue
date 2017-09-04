@@ -11,9 +11,6 @@
       <label class="w3-text" for="complejidad"> Complejidad </label>
       <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="complejidad" 
       value="Complejidad" :disabled="!editing && !addingNew" v-model="Tarea.Complejidad">
-      <label class="w3-text" for="estimacion"> Estimacion </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="numeric" name="estimacion" 
-      value="Estimacion" :disabled="!editing && !addingNew" v-model="Tarea.Estimacion">
     </div>
 
     <br>
@@ -70,17 +67,17 @@
 
 <script>
 import EventBus from './event-bus.js'
-import AppIcon from './App-icon.vue'
+//import AppIcon from './App-icon.vue'
 import appConfig from './config.js'
-import InfoMessage from './InfoMessage.vue'
+//import InfoMessage from './InfoMessage.vue'
 
 var httpURL = appConfig.URLTarea;
 var maxInt =  2147483647;
 
 export default {
   components: {
-    'app-icon' : AppIcon,
-    'infomessage' : InfoMessage
+    //'app-icon' : AppIcon,
+    //'infomessage' : InfoMessage
   },
 
   methods: {
@@ -88,9 +85,6 @@ export default {
       let mensaje ='';
       if(this.Tarea.Nombre == '') {
         mensaje = 'El Nombre de la tarea no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Tarea.Estimacion) || this.Tarea.Estimacion <= 0) {
-        mensaje = 'La Estimacion de la Tarea debe ser un número entero mayor que 0.';
         EventBus.$emit('showMessage', mensaje);
       } else if(this.isNumeric(this.Tarea.Descripcion) || this.Tarea.Descripcion == '') {
         mensaje = 'La Descripcion de la tarea no puede ser un número ni estar vacío.';
@@ -128,9 +122,6 @@ export default {
       if(this.Tarea.Nombre == '') {
         mensaje = 'El Nombre de la tarea no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Tarea.Estimacion) || this.Tarea.Estimacion <= 0) {
-        mensaje = 'La Estimacion de la Tarea debe ser un número entero mayor que 0.';
-        EventBus.$emit('showMessage', mensaje);
       } else if(this.isNumeric(this.Tarea.Descripcion) || this.Tarea.Descripcion == '') {
         mensaje = 'La Descripcion de la tarea no puede ser un número ni estar vacío.';
         EventBus.$emit('showMessage', mensaje);
@@ -155,13 +146,11 @@ export default {
       this.TareaCopia.Descripcion = this.Tarea.Descripcion;
       this.TareaCopia.Fecha = this.Tarea.Fecha;
       this.TareaCopia.Complejidad = this.Tarea.Complejidad;
-      this.TareaCopia.Estimacion = this.Tarea.Estimacion;
 
       this.Tarea.Nombre = '';
       this.Tarea.Descripcion = '';
       this.Tarea.Fecha = '';
       this.Tarea.Complejidad = '';
-      this.Tarea.Estimacion = '';
       this.addingNew = true;
     },
     discardNew: function () {
@@ -169,7 +158,6 @@ export default {
       this.Tarea.Descripcion = this.TareaCopia.Descripcion;
       this.Tarea.Fecha = this.TareaCopia.Fecha;
       this.Tarea.Complejidad = this.TareaCopia.Complejidad;
-      this.Tarea.Estimacion = this.TareaCopia.Estimacion;
       this.addingNew = false;
     },
     edit: function () {
@@ -177,7 +165,6 @@ export default {
       this.TareaCopia.Descripcion = this.Tarea.Descripcion;
       this.TareaCopia.Fecha = this.Tarea.Fecha;
       this.TareaCopia.Complejidad = this.Tarea.Complejidad;
-      this.TareaCopia.Estimacion = this.Tarea.Estimacion;
       this.editing = true;
     },
     discard: function () {
@@ -185,7 +172,6 @@ export default {
       this.Tarea.Descripcion = this.TareaCopia.Descripcion;
       this.Tarea.Fecha = this.TareaCopia.Fecha;
       this.Tarea.Complejidad = this.TareaCopia.Complejidad;
-      this.Tarea.Estimacion = this.TareaCopia.Estimacion;
       this.editing = false;
     },
     cleanForm: function() {
@@ -193,7 +179,6 @@ export default {
       this.Tarea.Descripcion = '';
       this.Tarea.Fecha = '';
       this.Tarea.Complejidad = '';
-      this.Tarea.Estimacion = '';
       this.Tarea.Id = '';
     },
     create: function () {
@@ -206,8 +191,7 @@ export default {
             Nombre: this.Tarea.Nombre,
             Descripcion: this.Tarea.Descripcion,
             Fecha: this.Tarea.Fecha,
-            Complejidad: this.Tarea.Complejidad,
-            Estimacion: this.Tarea.Estimacion
+            Complejidad: this.Tarea.Complejidad
           }
 
         })
@@ -233,8 +217,7 @@ export default {
               Nombre: this.Tarea.Nombre,
               Descripcion: this.Tarea.Descripcion,
               Fecha: this.Tarea.Fecha,
-              Complejidad: this.Tarea.Complejidad,
-              Estimacion: this.Tarea.Estimacion
+              Complejidad: this.Tarea.Complejidad
             }
           })
           .done(function(data) {
@@ -295,16 +278,14 @@ export default {
                 Nombre: '',
                 Descripcion: '',
                 Fecha: '',
-                Complejidad: '',
-                Estimacion: ''
+                Complejidad: ''
               },
               TareaCopia: {
                 Id: '',
                 Nombre: '',
                 Descripcion: '',
                 Fecha: '',
-                Complejidad: '',
-                Estimacion: ''
+                Complejidad: ''
               }
             }
           },
