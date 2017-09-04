@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <master-chooser></master-chooser>
-    <h2 v-show="opcion == 'entradas'"><strong>{{ title.Perfiles }}</strong></h2>
+    <h2 v-show="opcion == 'perfiles'"><strong>{{ title.Perfiles }}</strong></h2>
     <maestro-perfil v-show="opcion == 'perfiles'"></maestro-perfil>
     <detalle-perfil v-show="opcion == 'perfiles'"></detalle-perfil>
     
     <h2 v-show="opcion == 'tareas'"><strong>{{ title.Tareas }}</strong></h2>
     <maestro-tarea v-show="opcion == 'tareas'"></maestro-tarea>
     <detalle-tarea v-show="opcion == 'tareas'"></detalle-tarea>
-    <!--<infomessage style="clear:both"></infomessage>-->
+    <infomessage style="clear:both"></infomessage>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import MaestroPerfil from './components/Maestro-perfil.vue'
 import DetallePerfil from './components/Detalle-perfil.vue'
 import MaestroTarea from './components/Maestro-Tarea.vue'
 import DetalleTarea from './components/Detalle-Tarea.vue'
-//import InfoMessage from './components/InfoMessage.vue'
+import InfoMessage from './components/InfoMessage.vue'
 
 export default {
   components: {
@@ -28,7 +28,7 @@ export default {
     'detalle-perfil' : DetallePerfil,
     'maestro-tarea' : MaestroTarea,
     'detalle-tarea' : DetalleTarea,
-    //'infomessage' : InfoMessage
+    'infomessage' : InfoMessage
   },
 
   data: function() {

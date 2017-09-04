@@ -1,21 +1,21 @@
 <template>
   <div>
-    <<button type="button" class="btn btn-default btn-sm" title="Perfil" @click="chooseOption(options.Perfiles)">
-      <!-- <app-icon img="th-list"></app-icon> Perfiles -->
+    <button type="button" class="btn btn-default btn-sm" title="Perfil" @click="chooseOption(options.Perfiles)">
+      <app-icon img="th-list"></app-icon> Perfiles 
     </button>
     <button type="button" class="btn btn-default btn-sm" title="Tarea" @click="chooseOption(options.Tareas)">
-      <!-- <app-icon img="th-list"></app-icon> Tareas -->
+     <app-icon img="th-list"></app-icon> Tareas
     </button>
   </div>
 </template>
 
 <script>
 import EventBus from './event-bus.js'
-//import AppIcon from './App-icon.vue'
+import AppIcon from './App-icon.vue'
 
 export default {
   components: {
-    //'app-icon' : AppIcon
+    'app-icon' : AppIcon
   },
 
   data: function() {

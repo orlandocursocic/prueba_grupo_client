@@ -1,6 +1,6 @@
 var appConfig = {
-  "URLEntrada" : "http://localhost:52595/api/Entradas/",
-  "URLPelicula" : "http://localhost:52595/api/Tareas/"
+  "URLPerfil" : "http://localhost:49944/api/Perfiles/",
+  "URLTarea" : "http://localhost:49944/api/Tareas/"
 };
 
 export default appConfig;
