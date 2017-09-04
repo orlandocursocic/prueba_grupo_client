@@ -1,15 +1,15 @@
 <template>
-	<div>
+	<div  class="w3-container w3-card-4" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
 		<div>
 		  <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:400px"><strong>Perfil: </strong>{{Perfil.Nombre}}</h3>
 		  <label class="w3-text" for="nombre"> Nombre </label>
 		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Perfil.Nombre">
 		  <label class="w3-text" for="descripcion"> Descripción </label>
-		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="descripcion" value="Descripción" :disabled="!editing && !addingNew" v-model="Perfil.Descripción">
+		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="descripcion" value="Descripción" :disabled="!editing && !addingNew" v-model="Perfil.Descripcion">
 		  <label class="w3-text" for="departamento"> Departamento </label>
-		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="departamento" value="Departamento" :disabled="!editing && !addingNew" v-model="Perfil.Descripcion">
+		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="departamento" value="Departamento" :disabled="!editing && !addingNew" v-model="Perfil.Departamento">
 		  <label class="w3-text" for="edad-media"> Edad Media </label>
-		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="numeric" name="edad-media" value="EdadMedia" :disabled="!editing && !addingNew" v-model="Perfil.EdadMedia"><
+		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="numeric" name="edad-media" value="EdadMedia" :disabled="!editing && !addingNew" v-model="Perfil.EdadMedia">
 
 		  <!--  falta agregar campo de Administrador  -->
 		</div>
@@ -35,6 +35,17 @@
 			    </button>
 			  </div>
 			</template>
+
+			<template v-if="!editing">
+		        <div style="float: right">
+		          <button type="button" class="btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
+		            <app-icon img="edit"></app-icon>
+		          </button>
+		          <button type="button" class="btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
+		            <app-icon img="trash"></app-icon>
+		          </button>
+		        </div>
+      		</template>
 
 			<template v-else>
 			  <div style="float: right">
