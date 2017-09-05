@@ -2,15 +2,19 @@
 	<div  class="w3-container w3-card-4" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
 		<div>
 		  <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:400px"><strong>Perfil: </strong>{{Perfil.Nombre}}</h3>
+		  
 		  <label class="w3-text" for="nombre"> Nombre </label>
-		  <textarea class="w3-input w3-border" rows="2" style="background :white; resize:none; overflow: auto; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Perfil.Nombre"></textarea>
+		  <textarea class="w3-input w3-border" rows="2" style="background :white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Perfil.Nombre"></textarea>
+		  <br>
 		  <label class="w3-text" for="descripcion"> Descripción </label>
-		  <textarea  class="w3-input w3-border" rows="3" style="background :white; resize:none; overflow: auto; text-overflow: ellipsis" type="string" name="descripcion" placeholder="Introduce texto..." :disabled="!editing && !addingNew" v-model="Perfil.Descripcion"> </textarea>
+		  <textarea  class="w3-input w3-border" rows="3" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="descripcion" :disabled="!editing && !addingNew" v-model="Perfil.Descripcion"> </textarea>
+		  <br>	  
 		  <label class="w3-text" for="departamento"> Departamento </label>
 		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="string" name="departamento" value="Departamento" :disabled="!editing && !addingNew" v-model="Perfil.Departamento">
+		  <br>
 		  <label class="w3-text" for="edad-media"> Edad Media </label>
 		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="numeric" name="edad-media" value="EdadMedia" :disabled="!editing && !addingNew" v-model="Perfil.EdadMedia">
-
+		  <br>
 		  <label class="w3-text"> Administrador </label>
 		  <br>
 
