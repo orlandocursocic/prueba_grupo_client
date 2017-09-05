@@ -102,7 +102,7 @@
 	  	  } else if(this.Perfil.Departamento == '') {
 	  	    mensaje = 'El nombre del departamento no puede estar vacío.';
 	  	    EventBus.$emit('showMessage', mensaje);
-	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 || this.Perfil.EdadMedia == '' ) {
+	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 || this.Perfil.EdadMedia < 1 || this.Perfil.EdadMedia == '' ) {
 	  	    mensaje = 'La edad media debe ser un número y no superar los 100 años';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(this.Perfil.Administrador == '') {
