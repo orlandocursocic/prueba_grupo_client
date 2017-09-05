@@ -3,13 +3,13 @@
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Campo: </strong>{{Campo.Nombre}}</h3>
       <label class="w3-text" for="nombre"> Nombre </label>
-      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Campo.Nombre"></textarea>
+      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Campo.Nombre"></textarea>
       <br>
       <label class="w3-text" for="tipo"> Tipo </label>
-      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tipo" value="Tipo" :disabled="!editing && !addingNew" v-model="Campo.Tipo"></textarea>
+      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tipo" value="Tipo" :disabled="!editing && !addingNew" v-model="Campo.Tipo"></textarea>
       <br>
       <label class="w3-text" for="tareaAsociada"> Tarea Asociada </label>
-      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tareaAsociada" value="TareaAsociada" :disabled="!editing && !addingNew" v-model="Campo.TareaAsociada"></textarea>
+      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tareaAsociada" value="TareaAsociada" :disabled="!editing && !addingNew" v-model="Campo.TareaAsociada"></textarea>
     </div>
 
     <br>
