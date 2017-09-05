@@ -9,11 +9,16 @@
       <textarea class="w3-input w3-border" rows="3" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="desc" value="Descripcion" :disabled="!editing && !addingNew" v-model="Tarea.Descripcion"></textarea>
       <br>
       <label class="w3-text" for="fecha"> Fecha </label>
-      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="string" name="fecha" value="Fecha" :disabled="!editing && !addingNew" v-model="Tarea.Fecha">
+      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="date" name="fecha" value="Fecha" 
+      :disabled="!editing && !addingNew" v-model="Tarea.Fecha">
       <br>
       <label class="w3-text" for="complejidad"> Complejidad </label>
-      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="string" name="complejidad" 
-      value="Complejidad" :disabled="!editing && !addingNew" v-model="Tarea.Complejidad">
+      <select name="complejidad" v-model="Tarea.Complejidad" style="background: white; overflow: hidden; text-overflow: ellipsis" type="string" 
+      value="Complejidad" :disabled="!editing && !addingNew">
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="Baja">Baja</option>
+      </select>
     </div>
 
     <br>
@@ -95,8 +100,8 @@ export default {
       } else if(this.isNumeric(this.Tarea.Fecha) || this.Tarea.Fecha == '') {
         mensaje = 'La Fecha de la tarea no puede ser un número ni estar vacío';
         EventBus.$emit('showMessage', mensaje);
-      } else if(this.isNumeric(this.Tarea.Complejidad) || this.Tarea.Complejidad == '') {
-        mensaje = 'La Complejidad de la tarea no puede ser un número ni estar vacío';
+      } else if(!this.Tarea.Complejidad == 'Alta'|| !this.Tarea.Complejidad == 'Media' || !this.Tarea.Complejidad == 'Baja' || this.Tarea.Complejidad == '') {
+        mensaje = 'La Complejidad de la tarea no puede estar vacía';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.create();
@@ -129,10 +134,10 @@ export default {
         mensaje = 'La Descripcion de la tarea no puede ser un número ni estar vacío.';
         EventBus.$emit('showMessage', mensaje);
       } else if(this.isNumeric(this.Tarea.Fecha) || this.Tarea.Fecha == '') {
-        mensaje = 'La Fecha de la tarea no puede ser un número ni estar vacío';
+        mensaje = 'La Fecha de la tarea no puede estar vacía, seleccione una fecha válida.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(this.isNumeric(this.Tarea.Complejidad) || this.Tarea.Complejidad == '') {
-        mensaje = 'La Complejidad de la tarea no puede ser un número ni estar vacío';
+      } else if(!this.Tarea.Complejidad == 'Alta'|| !this.Tarea.Complejidad == 'Media' || !this.Tarea.Complejidad == 'Baja' || this.Tarea.Complejidad == '') {
+        mensaje = 'La Complejidad de la tarea no puede estar vacía';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.update();
@@ -263,6 +268,7 @@ export default {
                 type: "GET",
               })
               .done(function(data) {
+
                 _this.Tarea = data;
               })
               .fail(function(data) {
@@ -276,6 +282,7 @@ export default {
             return {
               editing: false,
               addingNew: false,
+              complejidad: { Alta: 'Alta', Media: 'Media', Baja: 'Baja'},
               Tarea: {
                 Id: '',
                 Nombre: '',
