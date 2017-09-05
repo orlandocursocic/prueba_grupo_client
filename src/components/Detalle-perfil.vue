@@ -4,20 +4,19 @@
 		  <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:400px"><strong>Perfil: </strong>{{Perfil.Nombre}}</h3>
 		  
 		  <label class="w3-text" for="nombre"> Nombre </label>
-		  <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Perfil.Nombre"></textarea>
-	
+		  <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Perfil.Nombre"></textarea>
+		  <br>
 		  <label class="w3-text" for="descripcion"> Descripción </label>
-		  <textarea  class="w3-input w3-border" rows="3" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="descripcion" :disabled="!editing && !addingNew" v-model="Perfil.Descripcion"> </textarea>
-		  
+		  <textarea  class="w3-input w3-border" rows="3" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="descripcion" :disabled="!editing && !addingNew" v-model="Perfil.Descripcion"> </textarea>
+		  <br>
 		  <label class="w3-text" for="departamento"> Departamento </label>
-		  <input class="w3-input w3-border" style=" overflow: hidden; text-overflow: ellipsis" type="text" name="departamento" value="Departamento" :disabled="!editing && !addingNew" v-model="Perfil.Departamento">
-		  
+		  <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="text" name="departamento" value="Departamento" :disabled="!editing && !addingNew" v-model="Perfil.Departamento">
+		  <br>
 		  <label class="w3-text" for="edad-media"> Edad Media </label>
-		  <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" name="edad-media" value="EdadMedia" :disabled="!editing && !addingNew" v-model="Perfil.EdadMedia">
-
+		  <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" name="edad-media" value="EdadMedia" :disabled="!editing && !addingNew" v-model="Perfil.EdadMedia">
+		  <br>
 		  <label class="w3-text"> Administrador </label>
 		  <br>
-
 		  <input type="radio" name="r_admin" :disabled="!editing && !addingNew" v-model="Perfil.Administrador" value="true"  :checked="Perfil.Administrador"> Si
 		  <input type="radio" name="r_admin" :disabled="!editing && !addingNew" v-model="Perfil.Administrador" value="false" :checked="!Perfil.Administrador"> No 
 
@@ -95,16 +94,16 @@
 	  	validateNew: function() {
 	  	  let mensaje ='';
 	  	  if(this.Perfil.Nombre == '') {
-	  	    mensaje = 'El nombre del perfil no puede estar vacía.';
+	  	    mensaje = 'El nombre del perfil no puede estar vacío.';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(this.Perfil.Descripcion == '') {
 	  	    mensaje = 'La descripción del perfil no puede estar vacía.';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(this.Perfil.Departamento == '') {
-	  	    mensaje = 'El nombre del departamento no puede contener un número ni estar vacío.';
+	  	    mensaje = 'El nombre del departamento no puede estar vacío.';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 || this.Perfil.EdadMedia == '' ) {
-	  	    mensaje = 'La edad media debe ser númerico y no superar los 100 años';
+	  	    mensaje = 'La edad media debe ser un número y no superar los 100 años';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(this.Perfil.Administrador == '') {
 	  	    mensaje = 'Por favor seleccione un valor para el administrador.';
@@ -135,18 +134,21 @@
 	  	validateUpdate: function() {
 	  	  let mensaje ='';
   	  	  if(this.Perfil.Nombre == '') {
-  	  	    mensaje = 'El nombre del perfil no puede estar vacío.';
-  	  	    EventBus.$emit('showMessage', mensaje);
-  	  	  } else if(this.Perfil.Descripcion == '') {
-  	  	    mensaje = 'La descripción del perfil no puede estar vacío.';
-  	  	    EventBus.$emit('showMessage', mensaje);
-  	  	  } else if(this.isNumeric(this.Perfil.Departamento) || this.Perfil.Departamento == '') {
-  	  	    mensaje = 'El nombre del departamento no puede contener un número ni estar vacío.';
-  	  	    EventBus.$emit('showMessage', mensaje);
-  	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 ) {
-  	  	    mensaje = 'La edad media debe ser númerico o no superar los 100 años';
-  	  	    EventBus.$emit('showMessage', mensaje);
-  	  	  } else {
+	  	    mensaje = 'El nombre del perfil no puede estar vacío.';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  } else if(this.Perfil.Descripcion == '') {
+	  	    mensaje = 'La descripción del perfil no puede estar vacía.';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  } else if(this.Perfil.Departamento == '') {
+	  	    mensaje = 'El nombre del departamento no puede estar vacío.';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 || this.Perfil.EdadMedia == '' ) {
+	  	    mensaje = 'La edad media debe ser un número y no superar los 100 años';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  } else if(this.Perfil.Administrador == '') {
+	  	    mensaje = 'Por favor seleccione un valor para el administrador.';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  } else {
   	  	    this.update();
   	  	  }
 	  	},
