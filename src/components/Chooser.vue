@@ -1,11 +1,14 @@
 <template>
   <div>
     <button type="button" class="btn btn-default btn-sm" title="Perfil" @click="chooseOption(options.Perfiles)">
-      <app-icon img="th-list"></app-icon> Perfiles 
+      <app-icon img="th-list"></app-icon> Perfiles
     </button>
     <button type="button" class="btn btn-default btn-sm" title="Tarea" @click="chooseOption(options.Tareas)">
      <app-icon img="th-list"></app-icon> Tareas
     </button>
+    <button type="button" class="btn btn-default btn-sm" title="Campo" @click="chooseOption(options.Campos)">
+     <app-icon img="th-list"></app-icon> Campos
+   </button>
   </div>
 </template>
 
@@ -22,7 +25,8 @@ export default {
     return {
       options: {
         Perfiles: 'perfiles',
-        Tareas: 'tareas'
+        Tareas: 'tareas',
+        Campos: 'campos'
       }
     }
   },

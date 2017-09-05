@@ -1,15 +1,15 @@
 <template>
   <div class="w3-container w3-card-4" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <div>
-      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Entrada, precio: </strong>{{Entrada.Precio}}</h3>
-      <label class="w3-text" for="precio"> Precio </label>
-      <input class="w3-input w3-border" type="numeric" name="precio" value="Precio" :disabled="!editing && !addingNew" v-model="Entrada.Precio">
-      <label class="w3-text" for="sala"> Sala </label>
-      <input class="w3-input w3-border" type="numeric" name="sala" value="Sala" :disabled="!editing && !addingNew" v-model="Entrada.Sala">
-      <label class="w3-text" for="butaca"> Butaca </label>
-      <input class="w3-input w3-border" type="numeric" name="butaca" value="Butaca" :disabled="!editing && !addingNew" v-model="Entrada.Butaca">
-      <label class="w3-text" for="fila"> Fila </label>
-      <input class="w3-input w3-border" type="numeric" name="fila" value="Fila" :disabled="!editing && !addingNew" v-model="Entrada.Fila">
+      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Campo: </strong>{{Campo.Nombre}}</h3>
+      <label class="w3-text" for="nombre"> Nombre </label>
+      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Campo.Nombre"></textarea>
+      <br>
+      <label class="w3-text" for="tipo"> Tipo </label>
+      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tipo" value="Tipo" :disabled="!editing && !addingNew" v-model="Campo.Tipo"></textarea>
+      <br>
+      <label class="w3-text" for="tareaAsociada"> Tarea Asociada </label>
+      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tareaAsociada" value="TareaAsociada" :disabled="!editing && !addingNew" v-model="Campo.TareaAsociada"></textarea>
     </div>
 
     <br>
@@ -70,7 +70,7 @@ import AppIcon from './App-icon.vue'
 import appConfig from './config.js'
 import InfoMessage from './InfoMessage.vue'
 
-var httpURL = appConfig.URLEntrada;
+var httpURL = appConfig.URLCampo;
 var maxInt =  2147483647;
 
 export default {
@@ -82,26 +82,14 @@ export default {
   methods: {
     validateNew: function() {
       let mensaje ='';
-      if(!this.isNumeric(this.Entrada.Precio) || this.Entrada.Precio <= 0) {
-        mensaje = 'El Precio debe ser un número mayor que 0.';
+      if(this.Campo.Nombre == '') {
+        mensaje = 'El nombre del campo no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Sala) || this.Entrada.Sala <= 0) {
-        mensaje = 'La Sala debe ser un número entero mayor que 0.';
+      } else if(this.Campo.Tipo == '') {
+        mensaje = 'El tipo del campo no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Butaca) || this.Entrada.Butaca <= 0) {
-        mensaje = 'La Butaca debe ser un número entero mayor que 0.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Fila) || this.Entrada.Fila <= 0) {
-        mensaje = 'La Fila debe ser un número entero mayor que 0.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Sala > maxInt) {
-        mensaje = 'La Sala debe ser un número menor que ' + maxInt;
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Butaca > maxInt) {
-        mensaje = 'La Butaca debe ser un número menor que ' + maxInt;
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Fila > maxInt) {
-        mensaje = 'La Fila debe ser un número menor que ' + maxInt;
+      } else if(this.Campo.TareaAsociada == '') {
+        mensaje = 'El nombre de la tarea asociada no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.create();
@@ -109,8 +97,8 @@ export default {
     },
     validateIdUpdate: function() {
       let mensaje ='';
-      if(this.Entrada.Id =='' || this.Entrada.Id < 0) {
-        mensaje = 'Seleccione una entrada de la lista.';
+      if(this.Campo.Id =='' || this.Campo.Id < 0) {
+        mensaje = 'Seleccione un campo de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.edit();
@@ -118,8 +106,8 @@ export default {
     },
     validateIdDelete: function() {
       let mensaje ='';
-      if(this.Entrada.Id =='' || this.Entrada.Id < 0) {
-        mensaje = 'Seleccione una entrada de la lista.';
+      if(this.Campo.Id =='' || this.Campo.Id < 0) {
+        mensaje = 'Seleccione un campo de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.remove();
@@ -127,26 +115,14 @@ export default {
     },
     validateUpdate: function() {
       let mensaje ='';
-      if(!this.isNumeric(this.Entrada.Precio) || this.Entrada.Precio <= 0) {
-        mensaje = 'El Precio debe ser un número mayor que 0.';
+      if(this.Campo.Nombre == '') {
+        mensaje = 'El nombre del campo no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Sala) || this.Entrada.Sala <= 0) {
-        mensaje = 'La Sala debe ser un número entero mayor que 0.';
+      } else if(this.Campo.Tipo == '') {
+        mensaje = 'El tipo del campo no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Butaca) || this.Entrada.Butaca <= 0) {
-        mensaje = 'La Butaca debe ser un número entero mayor que 0.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(!this.isInt(this.Entrada.Fila) || this.Entrada.Fila <= 0) {
-        mensaje = 'La Fila debe ser un número entero mayor que 0.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Sala > maxInt) {
-        mensaje = 'La Sala debe ser un número menor que ' + maxInt;
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Butaca > maxInt) {
-        mensaje = 'La Butaca debe ser un número menor que ' + maxInt;
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Entrada.Fila > maxInt) {
-        mensaje = 'La Fila debe ser un número menor que ' + maxInt;
+      } else if(this.Campo.TareaAsociada == '') {
+        mensaje = 'El nombre de la tarea asociada no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.update();
@@ -159,44 +135,38 @@ export default {
       return n % 1 === 0;
     },
     editNew: function () {
-      this.EntradaCopia.Precio = this.Entrada.Precio;
-      this.EntradaCopia.Sala = this.Entrada.Sala;
-      this.EntradaCopia.Butaca = this.Entrada.Butaca;
-      this.EntradaCopia.Fila = this.Entrada.Fila;
+      this.CampoCopia.Nombre = this.Campo.Nombre;
+      this.CampoCopia.Tipo = this.Campo.Tipo;
+      this.CampoCopia.TareaAsociada = this.Campo.TareaAsociada;
 
-      this.Entrada.Precio = '';
-      this.Entrada.Sala = '';
-      this.Entrada.Butaca = '';
-      this.Entrada.Fila = '';
+      this.Campo.Nombre = '';
+      this.Campo.Tipo = '';
+      this.Campo.TareaAsociada = '';
       this.addingNew = true;
     },
     discardNew: function () {
-      this.Entrada.Precio = this.EntradaCopia.Precio;
-      this.Entrada.Sala = this.EntradaCopia.Sala;
-      this.Entrada.Butaca = this.EntradaCopia.Butaca;
-      this.Entrada.Fila = this.EntradaCopia.Fila;
+      this.Campo.Nombre = this.CampoCopia.Nombre;
+      this.Campo.Tipo = this.CampoCopia.Tipo;
+      this.Campo.TareaAsociada = this.CampoCopia.TareaAsociada;
       this.addingNew = false;
     },
     edit: function () {
-      this.EntradaCopia.Precio = this.Entrada.Precio;
-      this.EntradaCopia.Sala = this.Entrada.Sala;
-      this.EntradaCopia.Butaca = this.Entrada.Butaca;
-      this.EntradaCopia.Fila = this.Entrada.Fila;
+      this.CampoCopia.Nombre = this.Campo.Nombre;
+      this.CampoCopia.Tipo = this.Campo.Tipo;
+      this.CampoCopia.TareaAsociada = this.Campo.TareaAsociada;
       this.editing = true;
     },
     discard: function () {
-      this.Entrada.Precio = this.EntradaCopia.Precio;
-      this.Entrada.Sala = this.EntradaCopia.Sala;
-      this.Entrada.Butaca = this.EntradaCopia.Butaca;
-      this.Entrada.Fila = this.EntradaCopia.Fila;
+      this.Campo.Nombre = this.CampoCopia.Nombre;
+      this.Campo.Tipo = this.CampoCopia.Tipo;
+      this.Campo.TareaAsociada = this.CampoCopia.TareaAsociada;
       this.editing = false;
     },
     cleanForm: function() {
-      this.Entrada.Precio = '';
-      this.Entrada.Sala = '';
-      this.Entrada.Butaca = '';
-      this.Entrada.Fila = '';
-      this.Entrada.Id = '';
+      this.Campo.Nombre = '';
+      this.Campo.Tipo = '';
+      this.Campo.TareaAsociada = '';
+      this.Campo.Id = '';
     },
     create: function () {
       var _this = this;
@@ -205,21 +175,20 @@ export default {
           url : httpURL,
           type: "POST",
           data: {
-            Precio: this.Entrada.Precio,
-            Sala: this.Entrada.Sala,
-            Butaca: this.Entrada.Butaca,
-            Fila: this.Entrada.Fila,
+            Nombre: this.Campo.Nombre,
+            Tipo: this.Campo.Tipo,
+            TareaAsociada: this.Campo.TareaAsociada
           }
 
         })
         .done(function(data) {
-          EventBus.$emit('updateListEntrada');
-          let mensaje ='Entrada añadida con éxito.';
+          EventBus.$emit('updateListCampo');
+          let mensaje ='Campo añadido con éxito.';
           EventBus.$emit('showMessage', mensaje);
           _this.addingNew = false;
         })
         .fail(function(data) {
-          let mensaje = 'No se pudo crear la Entrada. Revise su conexión a Internet.';
+          let mensaje = 'No se pudo crear el Campo. Revise su conexión a Internet.';
           EventBus.$emit('showMessage', mensaje);
         });
       },
@@ -227,25 +196,24 @@ export default {
         var _this = this;
         $.ajax(
           {
-            url : httpURL + this.Entrada.Id,
+            url : httpURL + this.Campo.Id,
             type: "PUT",
             data: {
-              Id: this.Entrada.Id,
-              Precio: this.Entrada.Precio,
-              Sala: this.Entrada.Sala,
-              Butaca: this.Entrada.Butaca,
-              Fila: this.Entrada.Fila
+              Id: this.Campo.Id,
+              Nombre: this.Campo.Nombre,
+              Tipo: this.Campo.Tipo,
+              TareaAsociada: this.Campo.TareaAsociada
             }
           })
           .done(function(data) {
-            EventBus.$emit('updateListEntrada');
-            let mensaje ='Entrada actualizada con éxito.';
+            EventBus.$emit('updateListCampo');
+            let mensaje ='Campo actualizado con éxito.';
             EventBus.$emit('showMessage', mensaje);
             _this.cleanForm();
             _this.editing = false;
           })
           .fail(function(data) {
-            let mensaje = 'No se pudo actualizar la Entrada. Revise su conexión a Internet.';
+            let mensaje = 'No se pudo actualizar el Campo. Revise su conexión a Internet.';
             EventBus.$emit('showMessage', mensaje);
           });
         },
@@ -253,18 +221,18 @@ export default {
           var _this = this;
           $.ajax(
             {
-              url : httpURL + this.Entrada.Id,
+              url : httpURL + this.Campo.Id,
               type: "DELETE",
-              data: {Id: this.Entrada.Id}
+              data: {Id: this.Campo.Id}
             })
             .done(function(data) {
-              EventBus.$emit('updateListEntrada');
+              EventBus.$emit('updateListCampo');
               _this.cleanForm();
-              let mensaje ='Entrada eliminada con éxito.';
+              let mensaje ='Campo eliminado con éxito.';
               EventBus.$emit('showMessage', mensaje);
             })
             .fail(function(data) {
-              let mensaje = 'No se pudo eliminar la Entrada. Revise su conexión a Internet.';
+              let mensaje = 'No se pudo eliminar el campo. Revise su conexión a Internet.';
               EventBus.$emit('showMessage', mensaje);
             });
             this.editing = false;
@@ -277,10 +245,10 @@ export default {
                 type: "GET",
               })
               .done(function(data) {
-                _this.Entrada = data;
+                _this.Campo = data;
               })
               .fail(function(data) {
-                let mensaje = 'No se pudo cargar la Entrada. Revise su conexión a Internet.';
+                let mensaje = 'No se pudo cargar el Campo. Revise su conexión a Internet.';
                 EventBus.$emit('showMessage', mensaje);
               });
             },
@@ -290,25 +258,23 @@ export default {
             return {
               editing: false,
               addingNew: false,
-              Entrada: {
+              Campo: {
                 Id: '',
-                Precio: '',
-                Sala: '',
-                Butaca: '',
-                Fila: ''
+                Nombre: '',
+                Tipo: '',
+                TareaAsociada: ''
               },
-              EntradaCopia: {
+              CampoCopia: {
                 Id: '',
-                Precio: '',
-                Sala: '',
-                Butaca: '',
-                Fila: ''
+                Nombre: '',
+                Tipo: '',
+                TareaAsociada: ''
               }
             }
           },
 
           mounted: function() {
-            EventBus.$on('entradaSelected', function(id) {
+            EventBus.$on('campoSelected', function(id) {
               this.load(id);
               this.editing = false;
               this.addingNew = false;
