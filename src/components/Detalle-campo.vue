@@ -6,10 +6,43 @@
       <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Campo.Nombre"></textarea>
       <br>
       <label class="w3-text" for="tipo"> Tipo </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tipo" value="Tipo" :disabled="!editing && !addingNew" v-model="Campo.Tipo"></textarea>
+      <select class="w3-select w3-border" name="tipo" style="overflow: hidden; text-overflow: ellipsis" value="Tipo" :disabled="!editing && !addingNew" v-model="Campo.Tipo">
+        <option value="string">String</option>
+        <option value="double">Double</option>
+        <option value="int">Int</option>
+        <option value="long">Long</option>
+      </select>
+      <br>
+
+      <template v-if="Campo.Tipo == 'string'">
+        <div style="float: left">
+          <br>
+          <label class="w3-text" for="maxLength"> Longitud Máxima </label>
+          <input class="w3-input w3-border" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" name="maxLength" value="MaxLength" :disabled="!editing && !addingNew" v-model="Campo.MaxLength"></textarea>
+          <br>
+          <label class="w3-text" for="minLength"> Longitud Mínima </label>
+          <input class="w3-input w3-border" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" name="minLength" value="MinLength" :disabled="!editing && !addingNew" v-model="Campo.MinLength"></textarea>
+          <br>
+        </div>
+      </template>
+
+      <template v-if="Campo.Tipo == 'double' || Campo.Tipo == 'int' || Campo.Tipo == 'long'">
+        <div style="float: left">
+          <br>
+          <label class="w3-text" for="maxLength"> Valor Máximo </label>
+          <input class="w3-input w3-border" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" name="maxValue" value="MaxValue" :disabled="!editing && !addingNew" v-model="Campo.MaxValue"></textarea>
+          <br>
+          <label class="w3-text" for="minLength"> Valor Mínimo </label>
+          <input class="w3-input w3-border" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" name="minValue" value="MinValue" :disabled="!editing && !addingNew" v-model="Campo.MinValue"></textarea>
+          <br>
+        </div>
+      </template>
+
+
       <br>
       <label class="w3-text" for="tareaAsociada"> Tarea Asociada </label>
       <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="tareaAsociada" value="TareaAsociada" :disabled="!editing && !addingNew" v-model="Campo.TareaAsociada"></textarea>
+
     </div>
 
     <br>
@@ -72,6 +105,9 @@ import InfoMessage from './InfoMessage.vue'
 
 var httpURL = appConfig.URLCampo;
 var maxInt =  2147483647;
+var minInt = -2147483648;
+var minFloat = Number.MIN_VALUE;
+var maxFloat = Number.MAX_VALUE;
 
 export default {
   components: {
@@ -80,6 +116,40 @@ export default {
   },
 
   methods: {
+    validateTipoString: function(){
+      let mensaje ='';
+      let validated = false;
+      if (!this.isInt(this.Campo.MaxLength) || this.Campo.MaxLength <= 0) {
+        mensaje = 'La longitud máxima debe ser un número entero mayor que 0.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (!this.isInt(this.Campo.MinLength) || this.Campo.MinLength < 0) {
+        mensaje = 'La longitud mínima debe ser un número entero mayor o igual que 0.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (!(this.Campo.MinLength <= this.Campo.MaxLength)) {
+        mensaje = 'La longitud mínima debe ser menor que la longitud máxima.';
+        EventBus.$emit('showMessage', mensaje);
+      } else {
+        validated = true;
+      }
+      return validated;
+    },
+    validateTipoInt: function(){
+      let mensaje ='';
+      let validated = false;
+      if (!this.isInt(this.Campo.MaxValue) || this.Campo.MaxValue > maxInt || this.Campo.MaxValue < minInt) {
+        mensaje = 'El valor máximo debe ser un número entero en el rango de int.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (!this.isInt(this.Campo.MinValue) || this.Campo.MinValue > maxInt || this.Campo.MinValue < minInt) {
+        mensaje = 'El valor mínimo debe ser un número entero en el rango de int.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (Math.abs(this.Campo.MinValue) >= Math.abs(this.Campo.MaxValue)) {
+        mensaje = 'El valor mínimo debe ser menor que el valor máximo.';
+        EventBus.$emit('showMessage', mensaje);
+      } else {
+        validated = true;
+      }
+      return validated;
+    },
     validateNew: function() {
       let mensaje ='';
       if(this.Campo.Nombre == '') {
@@ -91,8 +161,22 @@ export default {
       } else if(this.Campo.TareaAsociada == '') {
         mensaje = 'El nombre de la tarea asociada no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else {
-        this.create();
+      } else if(this.Campo.Tipo == 'string') {
+        if (this.validateTipoString()){
+          this.create();
+        }
+      } else if(this.Campo.Tipo == 'int') {
+        if (this.validateTipoInt()){
+          this.create();
+        }
+      } else if(this.Campo.Tipo == 'double') {
+        if (this.validateTipoDouble()){
+          this.create();
+        }
+      } else if(this.Campo.Tipo == 'float') {
+        if (this.validateTipoFloat()){
+          this.create();
+        }
       }
     },
     validateIdUpdate: function() {
@@ -138,28 +222,49 @@ export default {
       this.CampoCopia.Nombre = this.Campo.Nombre;
       this.CampoCopia.Tipo = this.Campo.Tipo;
       this.CampoCopia.TareaAsociada = this.Campo.TareaAsociada;
+      this.CampoCopia.MinValue = this.Campo.MinValue;
+      this.CampoCopia.MaxValue = this.Campo.MaxValue;
+      this.CampoCopia.MinLength = this.Campo.MinLength;
+      this.CampoCopia.MaxLength = this.Campo.MaxLength;
 
       this.Campo.Nombre = '';
       this.Campo.Tipo = '';
       this.Campo.TareaAsociada = '';
+      this.Campo.MinValue = null;
+      this.Campo.MaxValue = null;
+      this.Campo.MinLength = null;
+      this.Campo.MaxLength = null;
       this.addingNew = true;
     },
     discardNew: function () {
       this.Campo.Nombre = this.CampoCopia.Nombre;
       this.Campo.Tipo = this.CampoCopia.Tipo;
       this.Campo.TareaAsociada = this.CampoCopia.TareaAsociada;
+      this.Campo.MinValue = this.CampoCopia.MinValue;
+      this.Campo.MaxValue = this.CampoCopia.MaxValue;
+      this.Campo.MinLength = this.CampoCopia.MinLength;
+      this.Campo.MaxLength = this.CampoCopia.MaxLength;
       this.addingNew = false;
     },
     edit: function () {
       this.CampoCopia.Nombre = this.Campo.Nombre;
       this.CampoCopia.Tipo = this.Campo.Tipo;
       this.CampoCopia.TareaAsociada = this.Campo.TareaAsociada;
+      this.CampoCopia.MinValue = this.Campo.MinValue;
+      this.CampoCopia.MaxValue = this.Campo.MaxValue;
+      this.CampoCopia.MinLength = this.Campo.MinLength;
+      this.CampoCopia.MaxLength = this.Campo.MaxLength;
+
       this.editing = true;
     },
     discard: function () {
       this.Campo.Nombre = this.CampoCopia.Nombre;
       this.Campo.Tipo = this.CampoCopia.Tipo;
       this.Campo.TareaAsociada = this.CampoCopia.TareaAsociada;
+      this.Campo.MinValue = this.CampoCopia.MinValue;
+      this.Campo.MaxValue = this.CampoCopia.MaxValue;
+      this.Campo.MinLength = this.CampoCopia.MinLength;
+      this.Campo.MaxLength = this.CampoCopia.MaxLength;
       this.editing = false;
     },
     cleanForm: function() {
@@ -167,9 +272,23 @@ export default {
       this.Campo.Tipo = '';
       this.Campo.TareaAsociada = '';
       this.Campo.Id = '';
+      this.Campo.MinValue = null;
+      this.Campo.MaxValue = null;
+      this.Campo.MinLength = null;
+      this.Campo.MaxLength = null;
+    },
+    controlNulls: function() {
+      if (this.Campo.Tipo == 'string'){
+        this.Campo.MaxValue = null;
+        this.Campo.MinValue = null;
+      } else if (this.Campo.Tipo == 'double' || this.Campo.Tipo == 'int' || this.Campo.Tipo == 'long'){
+        this.Campo.MaxLength = null;
+        this.Campo.MinLength = null;
+      }
     },
     create: function () {
       var _this = this;
+      _this.controlNulls();
       $.ajax(
         {
           url : httpURL,
@@ -177,7 +296,11 @@ export default {
           data: {
             Nombre: this.Campo.Nombre,
             Tipo: this.Campo.Tipo,
-            TareaAsociada: this.Campo.TareaAsociada
+            TareaAsociada: this.Campo.TareaAsociada,
+            MaxValue: this.Campo.MaxValue,
+            MinValue: this.Campo.MinValue,
+            MaxLength: this.Campo.MinLength,
+            MinLength: this.Campo.MinLength
           }
 
         })
@@ -194,6 +317,7 @@ export default {
       },
       update: function () {
         var _this = this;
+        _this.controlNulls();
         $.ajax(
           {
             url : httpURL + this.Campo.Id,
@@ -202,7 +326,11 @@ export default {
               Id: this.Campo.Id,
               Nombre: this.Campo.Nombre,
               Tipo: this.Campo.Tipo,
-              TareaAsociada: this.Campo.TareaAsociada
+              TareaAsociada: this.Campo.TareaAsociada,
+              MaxValue: this.Campo.MaxValue,
+              MinValue: this.Campo.MinValue,
+              MaxLength: this.Campo.MinLength,
+              MinLength: this.Campo.MinLength
             }
           })
           .done(function(data) {
@@ -262,12 +390,20 @@ export default {
                 Id: '',
                 Nombre: '',
                 Tipo: '',
+                MaxValue: null,
+                MinValue: null,
+                MaxLength: null,
+                MinLength: null,
                 TareaAsociada: ''
               },
               CampoCopia: {
                 Id: '',
                 Nombre: '',
                 Tipo: '',
+                MaxValue: null,
+                MinValue: null,
+                MaxLength: null,
+                MinLength: null,
                 TareaAsociada: ''
               }
             }
