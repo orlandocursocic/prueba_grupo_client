@@ -3,17 +3,17 @@
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Tarea: </strong>{{Tarea.Nombre}}</h3>
       <label class="w3-text" for="nombre"> Nombre </label>
-      <textarea class="w3-input w3-border" rows="2" style="white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" 
-      name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Tarea.Nombre"></textarea> 
+      <textarea class="w3-input w3-border" rows="2" style="background: white; white-space: nowrap; overflow-x: auto; resize: none; text-overflow: ellipsis" type="string" name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Tarea.Nombre"></textarea> 
       <br>
       <label class="w3-text" for="desc"> Descripcion </label>
-      <textarea class="w3-input w3-border" rows="3" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string" name="desc" value="Descripcion" :disabled="!editing && !addingNew" v-model="Tarea.Descripcion"></textarea>
+      <textarea class="w3-input w3-border" rows="3" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string" 
+      name="desc" value="Descripcion" :disabled="!editing && !addingNew" v-model="Tarea.Descripcion"></textarea>
       <br>
       <label class="w3-text" for="fecha"> Fecha </label>
-      <input class="w3-input w3-border" style="overflow: hidden; text-overflow: ellipsis" type="date" name="fecha" value="Fecha" 
+      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="date" name="fecha" value="Fecha" 
       :disabled="!editing && !addingNew" v-model="Tarea.Fecha">
       <br>
-      <label class="w3-text" for="complejidad"> Complejidad </label>
+      <label class="w3-text" for="complejidad" style="background: white"> Complejidad </label>
       <select class="w3-select w3-border" name="complejidad" style="overflow: hidden; text-overflow: ellipsis" 
       value="Complejidad" :disabled="!editing && !addingNew" v-model="Tarea.Complejidad">
         <option value="alta">Alta</option>
