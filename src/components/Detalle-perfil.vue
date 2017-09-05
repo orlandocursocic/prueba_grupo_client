@@ -95,18 +95,22 @@
 	  	validateNew: function() {
 	  	  let mensaje ='';
 	  	  if(this.Perfil.Nombre == '') {
-	  	    mensaje = 'El nombre del perfil no puede estar vacío.';
+	  	    mensaje = 'El nombre del perfil no puede estar vacía.';
 	  	    EventBus.$emit('showMessage', mensaje);
 	  	  } else if(this.Perfil.Descripcion == '') {
-	  	    mensaje = 'La descripción del perfil no puede estar vacío.';
+	  	    mensaje = 'La descripción del perfil no puede estar vacía.';
 	  	    EventBus.$emit('showMessage', mensaje);
-	  	  } else if(this.isNumeric(this.Perfil.Departamento) || this.Perfil.Departamento == '') {
+	  	  } else if(this.Perfil.Departamento == '') {
 	  	    mensaje = 'El nombre del departamento no puede contener un número ni estar vacío.';
 	  	    EventBus.$emit('showMessage', mensaje);
-	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 ) {
-	  	    mensaje = 'La edad media debe ser númerico o no superar los 100 años';
+	  	  } else if(!this.isInt(this.Perfil.EdadMedia) || this.Perfil.EdadMedia > 100 || this.Perfil.EdadMedia == '' ) {
+	  	    mensaje = 'La edad media debe ser númerico y no superar los 100 años';
 	  	    EventBus.$emit('showMessage', mensaje);
-	  	  } else {
+	  	  } else if(this.Perfil.Administrador == '') {
+	  	    mensaje = 'Por favor seleccione un valor para el administrador.';
+	  	    EventBus.$emit('showMessage', mensaje);
+	  	  }
+	  	   else {
 	  	    this.create();
 	  	  }
 	  	},
