@@ -10,7 +10,7 @@
         <option value="string">String</option>
         <option value="double">Double</option>
         <option value="int">Int</option>
-        <option value="long">Long</option>
+        <option value="float">Float</option>
       </select>
       <br>
 
@@ -26,7 +26,7 @@
         </div>
       </template>
 
-      <template v-if="Campo.Tipo == 'double' || Campo.Tipo == 'int' || Campo.Tipo == 'long'">
+      <template v-if="Campo.Tipo == 'double' || Campo.Tipo == 'int' || Campo.Tipo == 'float'">
         <div style="float: left">
           <br>
           <label class="w3-text" for="maxLength"> Valor Máximo </label>
@@ -125,7 +125,7 @@ export default {
       } else if (!this.isInt(this.Campo.MinLength) || this.Campo.MinLength < 0) {
         mensaje = 'La longitud mínima debe ser un número entero mayor o igual que 0.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (!(this.Campo.MinLength <= this.Campo.MaxLength)) {
+      } else if (this.Campo.MinLength >= this.Campo.MaxLength) {
         mensaje = 'La longitud mínima debe ser menor que la longitud máxima.';
         EventBus.$emit('showMessage', mensaje);
       } else {
@@ -137,12 +137,46 @@ export default {
       let mensaje ='';
       let validated = false;
       if (!this.isInt(this.Campo.MaxValue) || this.Campo.MaxValue > maxInt || this.Campo.MaxValue < minInt) {
-        mensaje = 'El valor máximo debe ser un número entero en el rango de int.';
+        mensaje = 'El valor máximo debe ser un número entero en el rango del tipo int.';
         EventBus.$emit('showMessage', mensaje);
       } else if (!this.isInt(this.Campo.MinValue) || this.Campo.MinValue > maxInt || this.Campo.MinValue < minInt) {
-        mensaje = 'El valor mínimo debe ser un número entero en el rango de int.';
+        mensaje = 'El valor mínimo debe ser un número entero en el rango del tipo int.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (Math.abs(this.Campo.MinValue) >= Math.abs(this.Campo.MaxValue)) {
+      } else if (parseInt(this.Campo.MinValue) >= parseInt(this.Campo.MaxValue)) {
+        mensaje = 'El valor mínimo debe ser menor que el valor máximo.';
+        EventBus.$emit('showMessage', mensaje);
+      } else {
+        validated = true;
+      }
+      return validated;
+    },
+    validateTipoFloat: function(){
+      let mensaje ='';
+      let validated = false;
+      if (!this.isNumeric(parseFloat(this.Campo.MaxValue))) {
+        mensaje = 'El valor máximo debe ser un número en coma flotante.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (!this.isNumeric(parseFloat(this.Campo.MinValue))) {
+        mensaje = 'El valor mínimo debe ser un número en coma flotante.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (parseFloat(this.Campo.MinValue) >= parseFloat(this.Campo.MaxValue)) {
+        mensaje = 'El valor mínimo debe ser menor que el valor máximo.';
+        EventBus.$emit('showMessage', mensaje);
+      } else {
+        validated = true;
+      }
+      return validated;
+    },
+    validateTipoDouble: function(){
+      let mensaje ='';
+      let validated = false;
+      if (!this.isNumeric(parseFloat(this.Campo.MaxValue))) {
+        mensaje = 'El valor máximo debe ser un número en coma flotante.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (!this.isNumeric(parseFloat(this.Campo.MinValue))) {
+        mensaje = 'El valor mínimo debe ser un número en coma flotante.';
+        EventBus.$emit('showMessage', mensaje);
+      } else if (parseFloat(this.Campo.MinValue) >= parseFloat(this.Campo.MaxValue)) {
         mensaje = 'El valor mínimo debe ser menor que el valor máximo.';
         EventBus.$emit('showMessage', mensaje);
       } else {
@@ -208,8 +242,22 @@ export default {
       } else if(this.Campo.TareaAsociada == '') {
         mensaje = 'El nombre de la tarea asociada no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else {
-        this.update();
+      } else if(this.Campo.Tipo == 'string') {
+        if (this.validateTipoString()){
+          this.update();
+        }
+      } else if(this.Campo.Tipo == 'int') {
+        if (this.validateTipoInt()){
+          this.update();
+        }
+      } else if(this.Campo.Tipo == 'double') {
+        if (this.validateTipoDouble()){
+          this.update();
+        }
+      } else if(this.Campo.Tipo == 'float') {
+        if (this.validateTipoDouble()){
+          this.update();
+        }
       }
     },
     isNumeric: function(n) {
@@ -281,7 +329,7 @@ export default {
       if (this.Campo.Tipo == 'string'){
         this.Campo.MaxValue = null;
         this.Campo.MinValue = null;
-      } else if (this.Campo.Tipo == 'double' || this.Campo.Tipo == 'int' || this.Campo.Tipo == 'long'){
+      } else if (this.Campo.Tipo == 'double' || this.Campo.Tipo == 'int' || this.Campo.Tipo == 'float'){
         this.Campo.MaxLength = null;
         this.Campo.MinLength = null;
       }
@@ -299,7 +347,7 @@ export default {
             TareaAsociada: this.Campo.TareaAsociada,
             MaxValue: this.Campo.MaxValue,
             MinValue: this.Campo.MinValue,
-            MaxLength: this.Campo.MinLength,
+            MaxLength: this.Campo.MaxLength,
             MinLength: this.Campo.MinLength
           }
 
@@ -329,7 +377,7 @@ export default {
               TareaAsociada: this.Campo.TareaAsociada,
               MaxValue: this.Campo.MaxValue,
               MinValue: this.Campo.MinValue,
-              MaxLength: this.Campo.MinLength,
+              MaxLength: this.Campo.MaxLength,
               MinLength: this.Campo.MinLength
             }
           })
