@@ -119,10 +119,10 @@ export default {
     validateTipoString: function(){
       let mensaje ='';
       let validated = false;
-      if (!this.isInt(this.Campo.MaxLength) || this.Campo.MaxLength <= 0) {
+      if (this.Campo.MaxLength == null || !this.isInt(this.Campo.MaxLength) || this.Campo.MaxLength <= 0) {
         mensaje = 'La longitud máxima debe ser un número entero mayor que 0.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (!this.isInt(this.Campo.MinLength) || this.Campo.MinLength < 0) {
+      } else if (this.Campo.MinLength == null || !this.isInt(this.Campo.MinLength) || this.Campo.MinLength <= 0) {
         mensaje = 'La longitud mínima debe ser un número entero mayor o igual que 0.';
         EventBus.$emit('showMessage', mensaje);
       } else if (this.Campo.MinLength >= this.Campo.MaxLength) {
@@ -136,10 +136,10 @@ export default {
     validateTipoInt: function(){
       let mensaje ='';
       let validated = false;
-      if (!this.isInt(this.Campo.MaxValue) || this.Campo.MaxValue > maxInt || this.Campo.MaxValue < minInt) {
+      if (this.Campo.MaxValue == null || !this.isInt(this.Campo.MaxValue) || this.Campo.MaxValue > maxInt || this.Campo.MaxValue < minInt) {
         mensaje = 'El valor máximo debe ser un número entero en el rango del tipo int.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (!this.isInt(this.Campo.MinValue) || this.Campo.MinValue > maxInt || this.Campo.MinValue < minInt) {
+      } else if (this.Campo.MinValue == null || !this.isInt(this.Campo.MinValue) || this.Campo.MinValue > maxInt || this.Campo.MinValue < minInt) {
         mensaje = 'El valor mínimo debe ser un número entero en el rango del tipo int.';
         EventBus.$emit('showMessage', mensaje);
       } else if (parseInt(this.Campo.MinValue) >= parseInt(this.Campo.MaxValue)) {
@@ -153,10 +153,10 @@ export default {
     validateTipoFloat: function(){
       let mensaje ='';
       let validated = false;
-      if (!this.isNumeric(parseFloat(this.Campo.MaxValue))) {
+      if (this.Campo.MaxValue == null || !this.isNumeric(parseFloat(this.Campo.MaxValue))) {
         mensaje = 'El valor máximo debe ser un número en coma flotante.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (!this.isNumeric(parseFloat(this.Campo.MinValue))) {
+      } else if (this.Campo.MinValue == null || !this.isNumeric(parseFloat(this.Campo.MinValue))) {
         mensaje = 'El valor mínimo debe ser un número en coma flotante.';
         EventBus.$emit('showMessage', mensaje);
       } else if (parseFloat(this.Campo.MinValue) >= parseFloat(this.Campo.MaxValue)) {
@@ -170,10 +170,10 @@ export default {
     validateTipoDouble: function(){
       let mensaje ='';
       let validated = false;
-      if (!this.isNumeric(parseFloat(this.Campo.MaxValue))) {
+      if (this.Campo.MaxValue == null || !this.isNumeric(parseFloat(this.Campo.MaxValue))) {
         mensaje = 'El valor máximo debe ser un número en coma flotante.';
         EventBus.$emit('showMessage', mensaje);
-      } else if (!this.isNumeric(parseFloat(this.Campo.MinValue))) {
+      } else if (this.Campo.MinValue == null || !this.isNumeric(parseFloat(this.Campo.MinValue))) {
         mensaje = 'El valor mínimo debe ser un número en coma flotante.';
         EventBus.$emit('showMessage', mensaje);
       } else if (parseFloat(this.Campo.MinValue) >= parseFloat(this.Campo.MaxValue)) {
