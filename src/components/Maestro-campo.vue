@@ -2,7 +2,10 @@
   <div style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Campos</strong></h2></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Campo in Campos" @click="campoSelected(Campo.Id)"> Nombre: {{Campo.Nombre }}</li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Campo in Campos" @click="campoSelected(Campo.Id)"> 
+        <span class="glyphicon glyphicon-eye-open"></span>
+        &nbsp;
+        {{Campo.Nombre }}</li>
     </ul>
   </div>
 </template>

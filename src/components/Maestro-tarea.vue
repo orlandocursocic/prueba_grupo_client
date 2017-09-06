@@ -2,7 +2,10 @@
   <div style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Tareas</strong></h2></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Tarea in Tareas" @click="tareaSelected(Tarea.Id)"> Nombre: {{Tarea.Nombre}}</li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Tarea in Tareas" @click="tareaSelected(Tarea.Id)"> 
+        <span class="glyphicon glyphicon-eye-open"></span>
+        &nbsp;
+        {{Tarea.Nombre}}</li>
     </ul>
   </div>
 </template>

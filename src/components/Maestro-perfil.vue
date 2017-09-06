@@ -2,7 +2,10 @@
   <div style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Perfiles</strong></h2></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Perfil in Perfiles" @click="perfilSelected(Perfil.Id)"> Perfil: {{Perfil.Nombre}}</li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Perfil in Perfiles" @click="perfilSelected(Perfil.Id)"> 
+        <span class="glyphicon glyphicon-eye-open"></span>
+        &nbsp;
+        {{Perfil.Nombre}}</li>
     </ul>
   </div>
 </template>
