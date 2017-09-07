@@ -43,9 +43,9 @@ export default {
   data: function() {
     return {
       title: {
-        Perfiles: 'Maestro-Detalle de Perfil',
-        Tareas: 'Maestro-Detalle de Tarea',
-        Campos: 'Maestro-Detalle de Campo'
+        Perfiles: 'Administrador de Perfiles',
+        Tareas: 'Administrador de Tareas',
+        Campos: 'Administrador de Campos'
       },
 
       opcion: 'tareas'
